@@ -125,6 +125,35 @@ function publicUrl(absPath) {
   return "/uploads/" + path.basename(absPath);
 }
 
+const DEFAULT_THUMB_CROP = { x: 50, y: 50, zoom: 1 };
+
+function parseThumbCrop(raw) {
+  if (!raw) return { ...DEFAULT_THUMB_CROP };
+  let obj = raw;
+  if (typeof raw === "string") {
+    try {
+      obj = JSON.parse(raw);
+    } catch {
+      return { ...DEFAULT_THUMB_CROP };
+    }
+  }
+  if (!obj || typeof obj !== "object") return { ...DEFAULT_THUMB_CROP };
+  const clamp = (n, lo, hi, fallback) => {
+    const v = Number(n);
+    return Number.isFinite(v) ? Math.min(hi, Math.max(lo, v)) : fallback;
+  };
+  return {
+    x: clamp(obj.x, 0, 100, DEFAULT_THUMB_CROP.x),
+    y: clamp(obj.y, 0, 100, DEFAULT_THUMB_CROP.y),
+    zoom: clamp(obj.zoom, 1, 3, DEFAULT_THUMB_CROP.zoom),
+  };
+}
+
+function parseAspectRatio(raw) {
+  const v = Number(raw);
+  return Number.isFinite(v) && v > 0.05 && v < 20 ? v : null;
+}
+
 function uploadAbsPath(url) {
   if (!url) return null;
   return path.join(UPLOAD_DIR, path.basename(url));
@@ -191,6 +220,8 @@ app.post("/api/photos", uploadFields, async (req, res) => {
       description,
       imageUrl: publicUrl(imageFile.path),
       videoUrl,
+      thumbCrop: parseThumbCrop(req.body.thumbCrop),
+      aspectRatio: parseAspectRatio(req.body.aspectRatio),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -222,11 +253,20 @@ app.put("/api/photos/:id", uploadFields, async (req, res) => {
     if (typeof req.body.description === "string") {
       updates.description = req.body.description.trim();
     }
+    if (req.body.thumbCrop != null) {
+      updates.thumbCrop = parseThumbCrop(req.body.thumbCrop);
+    }
+    if (req.body.aspectRatio != null) {
+      const ar = parseAspectRatio(req.body.aspectRatio);
+      if (ar) updates.aspectRatio = ar;
+    }
 
     const imageFile = req.files?.image?.[0];
     if (imageFile) {
       await removeUpload(existing.imageUrl);
       updates.imageUrl = publicUrl(imageFile.path);
+      if (req.body.thumbCrop == null) updates.thumbCrop = { ...DEFAULT_THUMB_CROP };
+      if (req.body.aspectRatio == null) updates.aspectRatio = null;
     }
 
     const videoFile = req.files?.video?.[0];

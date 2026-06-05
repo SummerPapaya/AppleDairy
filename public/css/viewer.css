@@ -160,37 +160,30 @@
   z-index: 2;
 }
 
-/* Hanging apple */
+/* Apple thumbnail — centered in the date cell */
 .hang {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  transform-origin: top center;
+  transform-origin: center center;
   animation: sway 4.5s ease-in-out infinite;
   z-index: 1;
 }
 .cal-cell:nth-child(odd) .hang { animation-delay: -1.6s; animation-duration: 5.2s; }
 .cal-cell:nth-child(3n) .hang { animation-delay: -2.7s; animation-duration: 4.1s; }
 @keyframes sway {
-  0%, 100% { transform: translateX(-50%) rotate(-3.5deg); }
-  50% { transform: translateX(-50%) rotate(3.5deg); }
-}
-.hang .string {
-  width: 2px;
-  height: 16%;
-  min-height: 10px;
-  background: repeating-linear-gradient(var(--stem), var(--stem) 3px, transparent 3px, transparent 6px);
-  margin-bottom: -3px;
+  0%, 100% { transform: translate(-50%, -50%) rotate(-3deg); }
+  50% { transform: translate(-50%, -50%) rotate(3deg); }
 }
 .hang .apple-frame {
   position: relative;
-  width: 74%;
-  max-width: 64px;
+  width: 68%;
+  max-width: 72px;
   aspect-ratio: 1 / 1;
   transition: transform 0.18s ease, filter 0.18s ease;
 }
@@ -221,10 +214,11 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  will-change: transform;
 }
 .hang:hover { animation-play-state: paused; z-index: 6; }
 .hang:hover .apple-frame {
-  transform: scale(1.34) translateY(2px);
+  transform: scale(1.28);
   filter: drop-shadow(3px 6px 6px var(--shadow));
 }
 .hang .live-dot {
@@ -311,7 +305,7 @@
 .polaroid .pola-photo {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 1; /* overridden per photo from image dimensions */
   overflow: hidden;
   background: #efe7da;
   border-radius: 2px;

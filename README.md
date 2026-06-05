@@ -43,6 +43,12 @@ A “Live Photo” here is a **still image + a short looping video**. Upload bot
 the admin; the viewer shows the still and plays the video on hover / zoom, with
 a `LIVE` badge — mimicking Apple's Live Photos.
 
+### Calendar crop & gallery framing
+
+In **Admin**, after choosing a photo you can **drag and zoom** inside an apple-shaped
+preview to pick exactly what appears in **calendar** thumbnails. **Gallery** polaroids
+automatically match each photo's original aspect ratio.
+
 ## API
 
 | Method | Route | Purpose |

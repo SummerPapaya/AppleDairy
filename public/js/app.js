@@ -58,8 +58,28 @@
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   }
 
+  function photoAspect(photo) {
+    if (photo.aspectRatio && photo.aspectRatio > 0) return photo.aspectRatio;
+    return 1;
+  }
+
+  function bindAspectFromImage(img, photo, photoBox) {
+    if (photo.aspectRatio && photo.aspectRatio > 0) {
+      photoBox.style.aspectRatio = String(photo.aspectRatio);
+      return;
+    }
+    const apply = () => {
+      if (img.naturalWidth && img.naturalHeight) {
+        photoBox.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+      }
+    };
+    if (img.complete) apply();
+    else img.addEventListener("load", apply, { once: true });
+  }
+
   // Build a hover-playable Live Photo thumbnail (img + optional video overlay).
-  function mediaThumb(photo) {
+  function mediaThumb(photo, opts) {
+    const options = opts || {};
     const wrap = el("div", "lp-media");
     wrap.style.position = "relative";
     wrap.style.width = "100%";
@@ -69,7 +89,10 @@
     img.src = API + photo.imageUrl;
     img.alt = photo.description || "apple of the day";
     img.loading = "lazy";
+    if (options.crop) ThumbCrop.applyThumbCrop(img, photo.thumbCrop);
     wrap.appendChild(img);
+
+    if (options.photoBox) bindAspectFromImage(img, photo, options.photoBox);
 
     if (photo.videoUrl) {
       const vid = el("video");
@@ -86,6 +109,7 @@
         transition: "opacity 0.25s ease",
         pointerEvents: "none",
       });
+      if (options.crop) ThumbCrop.applyThumbCrop(vid, photo.thumbCrop);
       vid.dataset.lpVideo = "1";
       wrap.appendChild(vid);
     }
@@ -165,11 +189,10 @@
       const photo = byDate.get(key);
       if (photo) {
         const hang = el("div", "hang");
-        hang.appendChild(el("div", "string"));
         const frame = el("div", "apple-frame");
         frame.appendChild(el("div", "leaf"));
         const clip = el("div", "photo-clip");
-        clip.appendChild(mediaThumb(photo));
+        clip.appendChild(mediaThumb(photo, { crop: true }));
         frame.appendChild(clip);
         if (photo.videoUrl) frame.appendChild(el("div", "live-dot"));
         hang.appendChild(frame);
@@ -196,13 +219,16 @@
     booth.appendChild(el("div", "booth-hint", "drag the photos around ✦ click to zoom"));
     stage.appendChild(booth);
 
-    // Size the board to comfortably hold every polaroid.
+    // Size the board to comfortably hold every polaroid (variable aspect ratios).
     const W = booth.clientWidth || stage.clientWidth || 900;
-    const card = 196; // polaroid footprint incl. caption-ish
-    const cols = Math.max(1, Math.min(photos.length, Math.floor(W / card)));
+    const polW = 178;
+    const captionH = 58;
+    const maxPhotoH = Math.max(...photos.map((p) => polW / photoAspect(p)));
+    const cardH = maxPhotoH + captionH + 36;
+    const cols = Math.max(1, Math.min(photos.length, Math.floor(W / (polW + 24))));
     const rows = Math.ceil(photos.length / cols);
     const cellW = W / cols;
-    const cellH = 250;
+    const cellH = cardH + 24;
     const minH = Math.max(rows * cellH + 40, 460);
     booth.style.minHeight = minH + "px";
 
@@ -211,12 +237,14 @@
       const photo = photos[photoIdx];
       const col = slot % cols;
       const row = Math.floor(slot / cols);
+      const photoH = polW / photoAspect(photo);
+      const polH = photoH + captionH;
       const jitterX = (Math.random() - 0.5) * (cellW * 0.32);
-      const jitterY = (Math.random() - 0.5) * (cellH * 0.32);
-      let x = col * cellW + (cellW - 178) / 2 + jitterX;
+      const jitterY = (Math.random() - 0.5) * (cellH * 0.28);
+      let x = col * cellW + (cellW - polW) / 2 + jitterX;
       let y = row * cellH + 26 + jitterY;
-      x = Math.max(6, Math.min(x, Math.max(6, W - 184)));
-      y = Math.max(6, Math.min(y, minH - 230));
+      x = Math.max(6, Math.min(x, Math.max(6, W - polW - 8)));
+      y = Math.max(6, Math.min(y, minH - polH - 20));
       const rot = (Math.random() - 0.5) * 14;
 
       const pol = buildPolaroid(photo, rot);
@@ -234,7 +262,9 @@
     inner.style.transform = `rotate(${rot}deg)`;
 
     const photoBox = el("div", "pola-photo");
-    photoBox.appendChild(mediaThumb(photo));
+    const ar = photoAspect(photo);
+    photoBox.style.aspectRatio = String(ar);
+    photoBox.appendChild(mediaThumb(photo, { photoBox }));
     if (photo.videoUrl) photoBox.appendChild(el("div", "live-badge", "LIVE"));
     inner.appendChild(photoBox);
 

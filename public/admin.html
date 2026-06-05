@@ -45,6 +45,21 @@
             <div class="hint-small">JPG, PNG, HEIC, WebP, GIF.</div>
           </div>
 
+          <div class="field" id="crop-field" hidden>
+            <label>Calendar thumbnail crop</label>
+            <p class="hint-small">Drag to reposition the photo inside the apple · use the slider to zoom.</p>
+            <div class="crop-editor" id="crop-editor">
+              <div class="crop-viewport" id="crop-viewport">
+                <img id="crop-img" alt="" draggable="false" />
+                <div class="crop-mask" aria-hidden="true"></div>
+              </div>
+              <div class="crop-controls">
+                <span class="crop-zoom-label">Zoom</span>
+                <input type="range" id="crop-zoom" min="1" max="3" step="0.02" value="1" />
+              </div>
+            </div>
+          </div>
+
           <div class="field">
             <label>Live video (optional — the "Live Photo" motion)</label>
             <div class="dropzone" id="dz-video">
@@ -76,6 +91,7 @@
       </div>
     </main>
 
+    <script src="/js/thumb-crop.js"></script>
     <script src="/js/admin.js"></script>
   </body>
 </html>

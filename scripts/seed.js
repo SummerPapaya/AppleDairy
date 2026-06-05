@@ -94,6 +94,8 @@ async function main() {
       description: s.description,
       imageUrl: `/uploads/${imgName}`,
       videoUrl,
+      thumbCrop: { x: 50, y: 50, zoom: 1 },
+      aspectRatio: 1,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });
