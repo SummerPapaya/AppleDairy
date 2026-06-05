@@ -244,33 +244,38 @@
     // Shuffle display order
     const shuffled = shuffleArray([...sortedPhotos]);
 
-    // Layout polaroids in organic grid
+    // Layout polaroids in organic scattered grid
     const boardWidth = polaroidBoard.clientWidth || 900;
-    const boardPad = 40;
-    const minPolaroidW = 140;
-    const maxPolaroidW = 200;
-    const cols = Math.max(2, Math.floor((boardWidth - boardPad) / (maxPolaroidW + 20)));
+    const boardPad = 60;
+    const minPolaroidW = 150;
+    const maxPolaroidW = 210;
+
+    // Determine columns based on available width
+    const minCols = 2;
+    const targetCols = Math.max(minCols, Math.floor((boardWidth - boardPad) / (maxPolaroidW + 40)));
+    const cols = Math.min(targetCols, shuffled.length);
     const colW = (boardWidth - boardPad * 2) / cols;
     const colHeights = new Array(cols).fill(boardPad);
 
     shuffled.forEach((photo, i) => {
       const polW = minPolaroidW + Math.random() * (maxPolaroidW - minPolaroidW);
-      const rotation = (Math.random() * 20 - 10);
-      const col = i % cols;
-      const x = boardPad + col * colW + (colW - polW) / 2 + (Math.random() * 20 - 10);
+      const rotation = (Math.random() * 22 - 11);
+      // Pick shortest column
+      const col = colHeights.indexOf(Math.min(...colHeights));
+      const jitter = (Math.random() * 30 - 15);
+      const x = boardPad + col * colW + (colW - polW) / 2 + jitter;
       const y = colHeights[col];
 
-      const polaroid = createPolaroid(photo, polW, x, y, rotation, i, sortedPhotos);
+      const polaroid = createPolaroid(photo, polW, Math.max(8, x), y, rotation, i, sortedPhotos);
       polaroidBoard.appendChild(polaroid);
 
-      // Estimate polaroid height (width * aspect for square img + caption + padding)
-      const estH = polW + 52 + 22; // photo + bottom text area + frame overhead
-      const rotationExtra = Math.abs(rotation) * 1.5;
-      colHeights[col] += estH + rotationExtra + 20;
+      // Height estimate: square img + 52px caption area + 20px frame padding + rotation spread
+      const estH = polW + 72 + Math.abs(rotation) * 2;
+      colHeights[col] += estH + 24;
     });
 
     // Set board height
-    polaroidBoard.style.height = (Math.max(...colHeights) + boardPad) + 'px';
+    polaroidBoard.style.height = (Math.max(...colHeights) + boardPad * 2) + 'px';
   }
 
   function createPolaroid(photo, width, x, y, rotation, index, allList) {
