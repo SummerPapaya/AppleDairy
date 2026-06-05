@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 56" fill="none">
-  <path d="M38 6c5-4 12-5 15-3-1.5 5-6.5 9-12 9-2 0-3.5-2-3-4.5Z" fill="#87b067" stroke="#4a423b" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M32 8.5c0-3.5.5-5.5 2-7" stroke="#8a5a3c" stroke-width="2.8" stroke-linecap="round"/>
-  <path d="M32 15.2C28 14.6 25 16.2 24.2 18.4C17.2 17.2 9.8 22.2 9.2 29.8C8.6 35.8 10.8 40.2 17.2 42.8C21.8 44.4 26.8 45.2 32 47.2C37.2 45.2 42.2 44.4 46.8 42.8C53.2 40.2 55.4 35.8 54.8 29.8C54.2 22.2 46.8 17.2 39.8 18.4C39 16.2 36 14.6 32 15.2Z" fill="#e8604c" stroke="#4a423b" stroke-width="2.4" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 58" fill="none">
+  <path d="M36.5 9.2c3.8-4.8 9.8-5.8 12.2-4.2c-1.2 4.2-5.2 7.6-9.2 7.6c-1.7 0-3.1-1.7-2.4-3.4Z" fill="#87b067" stroke="#4a423b" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M32 9.2c0-2.8.4-4.8 1.8-6.2" stroke="#8a5a3c" stroke-width="3" stroke-linecap="round"/>
+  <path d="M32 17C27.4 16.4 22.8 18 20.2 20.4C17.6 17.6 13.8 17.2 11.2 19.4C5.8 21.4 3.2 27 3.2 33.2C3.2 39.6 6.2 45.4 11.6 48.4C15.8 50.6 20.4 51.4 25 50.4C27.4 52.4 29.8 53.8 32 52.8C34.2 53.8 36.6 52.4 39 50.4C43.6 51.4 48.2 50.6 52.4 48.4C57.8 45.4 60.8 39.6 60.8 33.2C60.8 27 58.2 21.4 52.8 19.4C50.2 17.2 46.4 17.6 43.8 20.4C41.2 18 36.6 16.4 32 17Z" fill="#e8604c" stroke="#4a423b" stroke-width="2.5" stroke-linejoin="round"/>
 </svg>
