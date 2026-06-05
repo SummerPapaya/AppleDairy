@@ -22,8 +22,8 @@
   gap: 0.6rem;
 }
 .brand .logo {
-  width: 52px;
-  height: 47px;
+  width: 46px;
+  height: 46px;
   flex: none;
 }
 .brand h1 {
@@ -183,45 +183,32 @@
 .hang .apple-frame {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
   max-height: 100%;
-  aspect-ratio: 64 / 58;
+  aspect-ratio: 1 / 1;
   transition: transform 0.18s ease, filter 0.18s ease;
 }
 .hang .apple-frame .leaf {
   position: absolute;
-  top: -1%;
-  left: 54%;
-  width: 24%;
-  height: 13%;
-  min-width: 13px;
-  min-height: 8px;
+  top: -7px;
+  right: 18%;
+  width: 16px;
+  height: 12px;
   background: var(--leaf);
   border: 1.5px solid var(--leaf-dark);
-  border-radius: 0 75% 0 75%;
-  transform: rotate(-38deg);
+  border-radius: 0 80% 0 80%;
+  transform: rotate(28deg);
   z-index: 3;
 }
 .hang .apple-frame .photo-clip {
-  position: relative;
   width: 100%;
   height: 100%;
+  border-radius: 48% 48% 46% 46% / 42% 42% 52% 52%;
   overflow: hidden;
+  border: 2.5px solid var(--apple-dark);
   background: #fff;
-  clip-path: url(#apple-clip);
-  -webkit-clip-path: url(#apple-clip);
   box-shadow: 2px 3px 5px var(--shadow);
-}
-.hang .apple-frame .photo-clip::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  clip-path: url(#apple-clip);
-  -webkit-clip-path: url(#apple-clip);
-  box-shadow: inset 0 0 0 2.5px var(--apple-dark);
-  pointer-events: none;
-  z-index: 2;
 }
 .hang .apple-frame .photo-clip img,
 .hang .apple-frame .photo-clip video {
