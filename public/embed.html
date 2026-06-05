@@ -31,8 +31,31 @@
     <header class="gallery-header">
       <div class="header-inner">
         <div class="brand">
-          <div class="brand-icon" aria-hidden="true">
-            <img src="/assets/apple-logo.svg" width="34" height="40" alt="Apple logo" class="apple-logo-img">
+          <div class="brand-icon apple-logo-img" aria-hidden="true">
+            <svg viewBox="0 0 100 108" width="34" height="37" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="appleBodyE" cx="64%" cy="32%" r="62%">
+                  <stop offset="0%"   stop-color="#ff5c42"/>
+                  <stop offset="30%"  stop-color="#e82c1a"/>
+                  <stop offset="100%" stop-color="#a81810"/>
+                </radialGradient>
+                <radialGradient id="appleRightE" cx="80%" cy="45%" r="50%">
+                  <stop offset="0%"   stop-color="#ff7055" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#ff7055" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="leafGradE" cx="38%" cy="38%" r="65%">
+                  <stop offset="0%"   stop-color="#82d830"/>
+                  <stop offset="100%" stop-color="#3a9018"/>
+                </radialGradient>
+              </defs>
+              <path d="M 50 23 C 51 16 53 10 55 5" stroke="#6b3920" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+              <path d="M 49 18 C 45 9,28 9,31 18 C 34 27,51 25,49 18 Z" fill="url(#leafGradE)"/>
+              <path d="M 49 18 C 43 17 37 17 31 18" stroke="#2d7814" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+              <path d="M 37 22 C 21 16,6 29,6 51 C 6 74,19 91,37 99 C 43 103,50 105,50 105 C 50 105,57 103,63 99 C 81 91,94 74,94 51 C 94 29,79 16,63 22 C 59 17,55 24,50 26 C 45 24,41 17,37 22 Z" fill="url(#appleBodyE)"/>
+              <path d="M 63 22 C 79 16,94 29,94 51 C 94 74,81 91,63 99 C 57 103,50 105,50 105 C 54 101,58 96,63 90 C 77 79,86 66,86 51 C 86 35,78 21,63 22 Z" fill="url(#appleRightE)"/>
+              <ellipse cx="72" cy="38" rx="11" ry="7" fill="white" opacity="0.25" transform="rotate(-38 72 38)"/>
+              <ellipse cx="70" cy="36" rx="5.5" ry="3.5" fill="white" opacity="0.40" transform="rotate(-38 70 36)"/>
+            </svg>
           </div>
           <h1 class="brand-title">An Apple A Day</h1>
         </div>
