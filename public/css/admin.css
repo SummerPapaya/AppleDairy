@@ -186,10 +186,10 @@
   position: relative;
   width: 100%;
   max-width: 220px;
-  aspect-ratio: 1.18 / 1;
+  aspect-ratio: 1.1 / 1;
   margin: 0 auto;
   border: 2.5px solid var(--ink);
-  border-radius: 52% 52% 50% 50% / 58% 58% 40% 40%;
+  border-radius: 50% 50% 40% 40% / 72% 72% 26% 26%;
   overflow: hidden;
   background: #efe7da;
   cursor: grab;
