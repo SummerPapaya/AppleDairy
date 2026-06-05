@@ -185,11 +185,11 @@
 .crop-viewport {
   position: relative;
   width: 100%;
-  max-width: 220px;
-  aspect-ratio: 1 / 1;
+  max-width: 200px;
+  aspect-ratio: 0.82 / 1;
   margin: 0 auto;
   border: 2.5px solid var(--ink);
-  border-radius: 48% 48% 46% 46% / 42% 42% 52% 52%;
+  border-radius: 46% 46% 48% 48% / 38% 38% 58% 58%;
   overflow: hidden;
   background: #efe7da;
   cursor: grab;
