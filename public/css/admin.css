@@ -1,4 +1,4 @@
-/* ===== APPLE DIARY ADMIN STYLES ===== */
+/* ===== AN APPLE A DAY — ADMIN STYLES ===== */
 :root {
   --apple-red: #e85d4a;
   --apple-red-dark: #c94535;
@@ -40,15 +40,22 @@ body {
   z-index: 100;
 }
 
-.apple-logo svg { filter: drop-shadow(2px 2px 0 rgba(201,69,53,0.3)); }
+.apple-logo-img {
+  filter: drop-shadow(2px 3px 3px rgba(192,57,43,0.28));
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  display: flex;
+  align-items: center;
+}
+.apple-logo-img:hover { transform: rotate(-8deg) scale(1.08); }
 
 .header-text h1 {
   font-family: var(--font-hand);
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--apple-red-dark);
   line-height: 1;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
+  text-shadow: 2px 2px 0 rgba(184,52,39,0.15);
 }
 
 .header-text .subtitle {

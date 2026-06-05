@@ -1,4 +1,4 @@
-# 🍎 Apple Diary
+# 🍎 An Apple A Day
 
 An apple-themed live photo diary app with a hand-drawn illustration style. Upload one special photo per day with descriptions, then display them in a beautiful **Calendar mode** or **Polaroid Gallery mode** — both fully embeddable in any website.
 

@@ -226,7 +226,6 @@
 
   function renderGallery() {
     polaroidBoard.innerHTML = '';
-    // Reset height so clientWidth is computed from flex/normal flow
     polaroidBoard.style.height = 'auto';
 
     const photos = [...allPhotos];
@@ -238,57 +237,74 @@
 
     galleryPhotoCount.textContent = `${photos.length} photo${photos.length !== 1 ? 's' : ''}`;
 
-    // Sort photos descending for lightbox nav
+    // Sort by date descending for lightbox nav order
     const sortedPhotos = [...photos].sort((a, b) => b.date.localeCompare(a.date));
-
-    // Shuffle display order
+    // Shuffle display/z-index order
     const shuffled = shuffleArray([...sortedPhotos]);
 
-    // Layout polaroids in organic scattered grid
-    const boardWidth = polaroidBoard.clientWidth || 900;
-    const boardPad = 60;
-    const minPolaroidW = 150;
-    const maxPolaroidW = 210;
+    const boardWidth  = polaroidBoard.clientWidth || window.innerWidth || 900;
+    const minW = 150, maxW = 220;
+    const edgePad = 20;   // min distance from board edges
+    const topPad  = 30;   // space at top for tape overhang
 
-    // Determine columns based on available width
-    const minCols = 2;
-    const targetCols = Math.max(minCols, Math.floor((boardWidth - boardPad) / (maxPolaroidW + 40)));
-    const cols = Math.min(targetCols, shuffled.length);
-    const colW = (boardWidth - boardPad * 2) / cols;
-    const colHeights = new Array(cols).fill(boardPad);
+    // Track placed positions to distribute photos across the board
+    // We use a loose grid to ensure photos span the full width but
+    // still appear random and freely overlapping
+    const cols   = Math.max(2, Math.round(boardWidth / (maxW + 20)));
+    const cellW  = boardWidth / cols;
+    // Each photo gets assigned a column zone, but with large random jitter
+    // so adjacent photos can freely overlap
+    const colNextY = new Array(cols).fill(topPad);
+
+    let maxBottom = topPad;
 
     shuffled.forEach((photo, i) => {
-      const polW = minPolaroidW + Math.random() * (maxPolaroidW - minPolaroidW);
-      const rotation = (Math.random() * 22 - 11);
-      // Pick shortest column
-      const col = colHeights.indexOf(Math.min(...colHeights));
-      const jitter = (Math.random() * 30 - 15);
-      const x = boardPad + col * colW + (colW - polW) / 2 + jitter;
-      const y = colHeights[col];
+      const polW     = minW + Math.random() * (maxW - minW);
+      const polH     = polW + 58;          // square image + caption strip
+      const rotation = (Math.random() * 26 - 13); // -13° … +13°
 
-      const polaroid = createPolaroid(photo, polW, Math.max(8, x), y, rotation, i, sortedPhotos);
+      // Column assignment (round-robin keeps horizontal spread)
+      const col    = i % cols;
+      const zoneX  = col * cellW;
+
+      // Random x within the zone, clamped to board
+      const xJitter = (Math.random() - 0.5) * cellW * 0.9;
+      let x = zoneX + cellW / 2 - polW / 2 + xJitter;
+      x = Math.max(edgePad, Math.min(boardWidth - polW - edgePad, x));
+
+      // Random y: stack loosely with variable vertical gap so photos overlap
+      const vertGap = polH * (0.35 + Math.random() * 0.45); // 35–80% of height gap
+      let y = colNextY[col];
+      y += Math.random() * 30 - 15; // ±15px jitter on y
+      y = Math.max(topPad, y);
+
+      colNextY[col] = y + vertGap;
+      maxBottom = Math.max(maxBottom, y + polH + 30);
+
+      const zIndex = 10 + i; // later-placed photos drawn on top
+      const polaroid = createPolaroid(photo, polW, x, y, rotation, zIndex, sortedPhotos);
       polaroidBoard.appendChild(polaroid);
-
-      // Height estimate: square img + 52px caption area + 20px frame padding + rotation spread
-      const estH = polW + 72 + Math.abs(rotation) * 2;
-      colHeights[col] += estH + 24;
     });
 
-    // Set board height
-    polaroidBoard.style.height = (Math.max(...colHeights) + boardPad * 2) + 'px';
+    polaroidBoard.style.height = (maxBottom + 80) + 'px';
   }
 
-  function createPolaroid(photo, width, x, y, rotation, index, allList) {
+  function createPolaroid(photo, width, x, y, rotation, zIndex, allList) {
     const el = document.createElement('div');
     el.className = 'polaroid';
+    // Store final rotation so hover can reference it
+    const animDelay = ((zIndex - 10) * 0.04).toFixed(2);
     el.style.cssText = `
       width: ${width}px;
-      left: ${Math.max(0, x)}px;
+      left: ${x}px;
       top: ${y}px;
       transform: rotate(${rotation}deg);
-      z-index: ${10 + index};
-      animation-delay: ${index * 0.04}s;
-      --tape-rotate: ${(rotation * 0.3).toFixed(1)}deg;
+      z-index: ${zIndex};
+      animation-delay: ${animDelay}s;
+      --tape-rotate: ${(rotation * 0.28).toFixed(1)}deg;
+      --init-rotate: ${(rotation + (Math.random() * 8 - 4)).toFixed(1)}deg;
+      --final-rotate: ${rotation.toFixed(1)}deg;
+      --hover-rotate: ${rotation > 0 ? (rotation + 2).toFixed(1) : (rotation - 2).toFixed(1)}deg;
     `;
 
     const imgSrc = photo.thumbnail_filename
