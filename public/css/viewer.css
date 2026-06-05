@@ -198,7 +198,7 @@
   background: var(--leaf);
   border: 1.5px solid var(--leaf-dark);
   border-radius: 0 80% 0 80%;
-  transform: rotate(28deg);
+  transform: rotate(118deg);
   z-index: 3;
 }
 .hang .apple-frame .photo-clip {
