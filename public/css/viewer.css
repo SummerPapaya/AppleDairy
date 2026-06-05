@@ -1,0 +1,464 @@
+/* =========================================================================
+   Viewer: header, mode toggle, calendar, gallery, lightbox
+   ========================================================================= */
+.viewer {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1.4rem 1.1rem 4rem;
+}
+
+/* ---- Header & toggle ---- */
+.viewer-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.brand .logo {
+  width: 46px;
+  height: 46px;
+  flex: none;
+}
+.brand h1 {
+  font-family: var(--font-hand);
+  font-size: 2.4rem;
+  line-height: 0.9;
+  margin: 0;
+  color: var(--apple-dark);
+}
+.brand p {
+  margin: 0.1rem 0 0;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+.mode-toggle {
+  display: inline-flex;
+  gap: 0.5rem;
+  padding: 0.35rem;
+  background: var(--bg-soft);
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 2px 3px 0 var(--ink);
+}
+.mode-toggle .btn {
+  box-shadow: none;
+  border: none;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.mode-toggle .btn:hover {
+  transform: none;
+  background: rgba(255, 255, 255, 0.6);
+}
+.mode-toggle .btn.is-active {
+  background: var(--apple);
+  color: #fff;
+  box-shadow: 1px 2px 0 var(--ink);
+}
+.mode-toggle .btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.stage {
+  position: relative;
+  min-height: 60vh;
+}
+
+.empty-note {
+  text-align: center;
+  color: var(--ink-soft);
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  margin-top: 3rem;
+}
+.loading-note {
+  text-align: center;
+  color: var(--ink-soft);
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  margin-top: 3rem;
+}
+
+/* ============================ CALENDAR MODE ============================ */
+.cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.cal-head h2 {
+  font-family: var(--font-hand);
+  font-size: 2rem;
+  margin: 0;
+  min-width: 8.5rem;
+  text-align: center;
+  color: var(--ink);
+}
+.cal-nav {
+  width: 42px;
+  height: 42px;
+  font-size: 1.3rem;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+}
+.cal-dow {
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-bottom: 0.2rem;
+}
+.cal-cell {
+  position: relative;
+  aspect-ratio: 1 / 1.05;
+  border: 2px dashed var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.45);
+  padding-top: 4px;
+  overflow: visible;
+}
+.cal-cell.empty-day {
+  background: transparent;
+  border-color: transparent;
+}
+.cal-cell.is-today {
+  border-style: solid;
+  border-color: var(--accent);
+  background: rgba(246, 196, 83, 0.12);
+}
+.cal-daynum {
+  position: absolute;
+  top: 5px;
+  left: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  z-index: 2;
+}
+
+/* Hanging apple */
+.hang {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transform-origin: top center;
+  animation: sway 4.5s ease-in-out infinite;
+  z-index: 1;
+}
+.cal-cell:nth-child(odd) .hang { animation-delay: -1.6s; animation-duration: 5.2s; }
+.cal-cell:nth-child(3n) .hang { animation-delay: -2.7s; animation-duration: 4.1s; }
+@keyframes sway {
+  0%, 100% { transform: translateX(-50%) rotate(-3.5deg); }
+  50% { transform: translateX(-50%) rotate(3.5deg); }
+}
+.hang .string {
+  width: 2px;
+  height: 16%;
+  min-height: 10px;
+  background: repeating-linear-gradient(var(--stem), var(--stem) 3px, transparent 3px, transparent 6px);
+  margin-bottom: -3px;
+}
+.hang .apple-frame {
+  position: relative;
+  width: 74%;
+  max-width: 64px;
+  aspect-ratio: 1 / 1;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.hang .apple-frame .leaf {
+  position: absolute;
+  top: -7px;
+  right: 18%;
+  width: 16px;
+  height: 12px;
+  background: var(--leaf);
+  border: 1.5px solid var(--leaf-dark);
+  border-radius: 0 80% 0 80%;
+  transform: rotate(28deg);
+  z-index: 3;
+}
+.hang .apple-frame .photo-clip {
+  width: 100%;
+  height: 100%;
+  border-radius: 48% 48% 46% 46% / 42% 42% 52% 52%;
+  overflow: hidden;
+  border: 2.5px solid var(--apple-dark);
+  background: #fff;
+  box-shadow: 2px 3px 5px var(--shadow);
+}
+.hang .apple-frame .photo-clip img,
+.hang .apple-frame .photo-clip video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hang:hover { animation-play-state: paused; z-index: 6; }
+.hang:hover .apple-frame {
+  transform: scale(1.34) translateY(2px);
+  filter: drop-shadow(3px 6px 6px var(--shadow));
+}
+.hang .live-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border: 1.5px solid var(--apple-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+.hang .live-dot::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--apple);
+}
+
+/* ============================ GALLERY MODE ============================ */
+.booth {
+  position: relative;
+  width: 100%;
+  min-height: 72vh;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius);
+  background-color: var(--bg-soft);
+  background-image:
+    linear-gradient(rgba(138, 90, 60, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138, 90, 60, 0.05) 1px, transparent 1px);
+  background-size: 26px 26px;
+  box-shadow: inset 0 0 36px rgba(138, 90, 60, 0.08), 3px 5px 0 var(--ink);
+  overflow: hidden;
+  touch-action: none;
+}
+.booth-hint {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  color: var(--ink-soft);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.polaroid {
+  position: absolute;
+  width: 178px;
+  background: var(--paper);
+  padding: 12px 12px 10px;
+  border-radius: 4px;
+  box-shadow: 3px 6px 14px var(--shadow);
+  cursor: grab;
+  user-select: none;
+  transition: box-shadow 0.16s ease, transform 0.16s ease, filter 0.16s ease;
+  will-change: transform;
+}
+.polaroid::after {
+  /* little tape on top */
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 56px;
+  height: 20px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(246, 196, 83, 0.55);
+  border: 1px dashed rgba(138, 90, 60, 0.35);
+  border-radius: 2px;
+}
+.polaroid .pola-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #efe7da;
+  border-radius: 2px;
+}
+.polaroid .pola-photo img,
+.polaroid .pola-photo video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.polaroid .caption {
+  font-family: var(--font-hand);
+  text-align: center;
+  margin-top: 8px;
+  line-height: 1.05;
+}
+.polaroid .caption .desc {
+  font-size: 1.32rem;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.polaroid .caption .date {
+  font-size: 1.05rem;
+  color: var(--apple-dark);
+  margin-top: 1px;
+}
+.polaroid:hover {
+  box-shadow: 6px 12px 24px rgba(74, 66, 59, 0.32);
+  transform: scale(1.06) rotate(0deg) !important;
+  z-index: 50 !important;
+  filter: saturate(1.08);
+}
+.polaroid.dragging {
+  cursor: grabbing;
+  box-shadow: 10px 18px 30px rgba(74, 66, 59, 0.4);
+  transform: scale(1.04) rotate(0deg) !important;
+  z-index: 60 !important;
+}
+.live-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(2px);
+  padding: 2px 7px;
+  border-radius: 999px;
+  z-index: 4;
+  pointer-events: none;
+}
+.live-badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+}
+
+/* ============================ LIGHTBOX ============================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(60, 50, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  padding: 1.2rem;
+}
+.lightbox.open {
+  display: flex;
+  animation: fade 0.18s ease;
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.lightbox-card {
+  background: var(--paper);
+  padding: 16px 16px 14px;
+  border-radius: 6px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  max-width: min(92vw, 560px);
+  transform: rotate(-1.2deg);
+  position: relative;
+  animation: pop 0.2s ease;
+}
+@keyframes pop { from { transform: rotate(-1.2deg) scale(0.92); } to { transform: rotate(-1.2deg) scale(1); } }
+.lightbox-media {
+  position: relative;
+  width: 100%;
+  max-height: 64vh;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #000;
+  border-radius: 3px;
+}
+.lightbox-media img,
+.lightbox-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+  display: block;
+}
+.lightbox-cap {
+  font-family: var(--font-hand);
+  text-align: center;
+  margin-top: 12px;
+}
+.lightbox-cap .desc {
+  font-size: 1.85rem;
+  color: var(--ink);
+  line-height: 1.05;
+}
+.lightbox-cap .date {
+  font-size: 1.3rem;
+  color: var(--apple-dark);
+}
+.lightbox-close {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--apple);
+  color: #fff;
+  border: 2.5px solid var(--ink);
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 2px 3px 0 var(--ink);
+  line-height: 1;
+}
+.lightbox-close:hover { transform: scale(1.08); }
+.lightbox .live-badge {
+  font-size: 0.72rem;
+  padding: 3px 9px;
+}
+
+@media (max-width: 560px) {
+  .brand h1 { font-size: 2rem; }
+  .cal-grid { gap: 0.25rem; }
+  .cal-daynum { font-size: 0.62rem; }
+  .polaroid { width: 150px; }
+  .viewer { padding: 1rem 0.7rem 3rem; }
+}

@@ -1,0 +1,101 @@
+/* =========================================================================
+   An Apple A Day — shared "cute hand-drawn sketch" theme
+   ========================================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Gochi+Hand&family=Quicksand:wght@400;500;600;700&display=swap");
+
+:root {
+  --bg: #fffdf6;
+  --bg-soft: #fdf4e3;
+  --paper: #fffdfa;
+  --ink: #4a423b;
+  --ink-soft: #8c8178;
+  --apple: #e8604c;
+  --apple-dark: #c8472f;
+  --leaf: #87b067;
+  --leaf-dark: #5f8a45;
+  --stem: #8a5a3c;
+  --accent: #f6c453;
+  --line: #d9cfc1;
+  --shadow: rgba(74, 66, 59, 0.18);
+
+  --font-ui: "Quicksand", system-ui, -apple-system, sans-serif;
+  --font-hand: "Caveat", "Gochi Hand", cursive;
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(135, 176, 103, 0.08) 0, transparent 30%),
+    radial-gradient(circle at 82% 16%, rgba(232, 96, 76, 0.08) 0, transparent 28%),
+    radial-gradient(circle at 50% 90%, rgba(246, 196, 83, 0.08) 0, transparent 32%);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Hand-drawn "sketch" border using layered box-shadows + slightly wobbly radius */
+.sketch {
+  border: 2.5px solid var(--ink);
+  border-radius: 255px 12px 225px 15px / 15px 225px 12px 255px;
+  background: var(--paper);
+}
+
+.btn {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 2.5px solid var(--ink);
+  border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 2px 3px 0 var(--ink);
+}
+.btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 4px 0 var(--ink);
+}
+.btn:active {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.btn.primary {
+  background: var(--apple);
+  color: #fff;
+}
+.btn.leaf {
+  background: var(--leaf);
+  color: #fff;
+}
+.btn.is-active {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.hand {
+  font-family: var(--font-hand);
+}
+
+/* scrollbar polish */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 10px;
+}

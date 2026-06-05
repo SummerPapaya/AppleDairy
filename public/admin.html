@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>An Apple A Day · Admin 🍎</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body>
+    <main class="admin">
+      <div class="admin-head">
+        <img src="/assets/apple.svg" alt="apple" />
+        <h1>An Apple A Day · Studio</h1>
+      </div>
+      <p class="admin-sub">
+        Upload &amp; edit your Live Photos for each day, from phone or computer.
+        View them in the <a href="/" target="_blank" rel="noopener">gallery →</a>
+      </p>
+
+      <div class="layout">
+        <!-- Upload / edit form -->
+        <form class="card" id="photo-form">
+          <h2 id="form-title">🍎 New apple of the day</h2>
+
+          <div class="field">
+            <label for="f-date">Date</label>
+            <input type="date" id="f-date" name="date" required />
+          </div>
+
+          <div class="field">
+            <label for="f-desc">Description (handwritten caption)</label>
+            <textarea id="f-desc" name="description" placeholder="A crisp little Fuji from the market…"></textarea>
+          </div>
+
+          <div class="field">
+            <label>Photo (still image)</label>
+            <div class="dropzone" id="dz-image">
+              <input type="file" id="f-image" name="image" accept="image/*" hidden />
+              <div class="dz-label">Tap to choose / take a photo</div>
+              <div class="dz-name" id="image-name"></div>
+              <img class="preview" id="image-preview" hidden alt="" />
+            </div>
+            <div class="hint-small">JPG, PNG, HEIC, WebP, GIF.</div>
+          </div>
+
+          <div class="field">
+            <label>Live video (optional — the "Live Photo" motion)</label>
+            <div class="dropzone" id="dz-video">
+              <input type="file" id="f-video" name="video" accept="video/*" hidden />
+              <div class="dz-label">Tap to choose a .mov / .mp4 clip</div>
+              <div class="dz-name" id="video-name"></div>
+            </div>
+            <div class="hint-small">
+              Converted to web-friendly MP4 automatically.
+              <label id="remove-video-row" hidden>
+                <input type="checkbox" id="f-remove-video" /> remove existing video
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn primary" id="submit-btn">Save apple</button>
+            <button type="button" class="btn" id="reset-btn" hidden>Cancel edit</button>
+          </div>
+          <div class="status" id="status"></div>
+        </form>
+
+        <!-- Existing entries -->
+        <section class="entries">
+          <h2>The basket</h2>
+          <div class="entry-grid" id="entry-grid"></div>
+          <p class="empty-entries" id="empty-entries" hidden>No apples yet — add your first! 🍎</p>
+        </section>
+      </div>
+    </main>
+
+    <script src="/js/admin.js"></script>
+  </body>
+</html>

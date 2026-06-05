@@ -1,0 +1,23 @@
+{
+  "name": "an-apple-a-day",
+  "version": "1.0.0",
+  "description": "An Apple A Day — store apple-themed Live Photos of the day in a cute, hand-drawn sketch style, viewable as a hanging-apple calendar or a draggable polaroid photo booth.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "live-photos",
+    "gallery",
+    "calendar",
+    "apple",
+    "polaroid"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^2.1.1"
+  }
+}
