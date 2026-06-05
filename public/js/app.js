@@ -248,7 +248,7 @@
   }
 
   function makeDraggable(pol, booth, photo) {
-    let startX, startY, originX, originY, dx = 0, dy = 0, moved, pointerId;
+    let startX, startY, originX, originY, moved, pointerId;
     const rot = pol.dataset.rot;
 
     pol.addEventListener("pointerdown", (e) => {
@@ -259,7 +259,6 @@
       startY = e.clientY;
       originX = pol.offsetLeft;
       originY = pol.offsetTop;
-      dx = dy = 0;
       moved = false;
       pol.classList.add("dragging");
       e.preventDefault();
@@ -271,22 +270,18 @@
       const rawDy = e.clientY - startY;
       if (!moved && Math.hypot(rawDx, rawDy) > 5) moved = true;
       if (!moved) return;
-      // Clamp so the card stays mostly on the board.
-      dx = Math.max(-40 - originX, Math.min(rawDx, booth.clientWidth - 60 - originX));
-      dy = Math.max(-10 - originY, Math.min(rawDy, booth.clientHeight - 60 - originY));
-      // Move the whole card on a single GPU layer (no caption ghosting).
-      pol.style.transform = `translate3d(${dx}px, ${dy}px, 0) rotate(${rot}deg)`;
+      // Move via left/top (no layer promotion) so every frame fully repaints —
+      // this avoids stale composited "ghost" paint of the caption text.
+      const nx = Math.max(-40, Math.min(originX + rawDx, booth.clientWidth - 60));
+      const ny = Math.max(-10, Math.min(originY + rawDy, booth.clientHeight - 60));
+      pol.style.left = nx + "px";
+      pol.style.top = ny + "px";
     });
 
     function end() {
       if (pointerId == null) return;
       try { pol.releasePointerCapture(pointerId); } catch (e) {}
       pol.classList.remove("dragging");
-      if (moved) {
-        // Bake the transform offset into left/top, then reset transform.
-        pol.style.left = originX + dx + "px";
-        pol.style.top = originY + dy + "px";
-      }
       pol.style.transform = `rotate(${rot}deg)`;
       pointerId = null;
       if (!moved) openLightbox(photo);
