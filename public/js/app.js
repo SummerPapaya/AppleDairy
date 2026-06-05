@@ -248,43 +248,45 @@
   }
 
   function makeDraggable(pol, booth, photo) {
-    let startX, startY, originX, originY, moved, pointerId;
+    let startX, startY, originX, originY, dx = 0, dy = 0, moved, pointerId;
     const rot = pol.dataset.rot;
 
     pol.addEventListener("pointerdown", (e) => {
       if (e.button != null && e.button !== 0) return;
       pointerId = e.pointerId;
       pol.setPointerCapture(pointerId);
-      const br = booth.getBoundingClientRect();
       startX = e.clientX;
       startY = e.clientY;
       originX = pol.offsetLeft;
       originY = pol.offsetTop;
+      dx = dy = 0;
       moved = false;
       pol.classList.add("dragging");
-      // bring to front
-      pol.style.zIndex = "999";
       e.preventDefault();
     });
 
     pol.addEventListener("pointermove", (e) => {
       if (pointerId == null) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-      if (!moved && Math.hypot(dx, dy) > 5) moved = true;
+      const rawDx = e.clientX - startX;
+      const rawDy = e.clientY - startY;
+      if (!moved && Math.hypot(rawDx, rawDy) > 5) moved = true;
       if (!moved) return;
-      let nx = originX + dx;
-      let ny = originY + dy;
-      nx = Math.max(-40, Math.min(nx, booth.clientWidth - 60));
-      ny = Math.max(-10, Math.min(ny, booth.clientHeight - 60));
-      pol.style.left = nx + "px";
-      pol.style.top = ny + "px";
+      // Clamp so the card stays mostly on the board.
+      dx = Math.max(-40 - originX, Math.min(rawDx, booth.clientWidth - 60 - originX));
+      dy = Math.max(-10 - originY, Math.min(rawDy, booth.clientHeight - 60 - originY));
+      // Move the whole card on a single GPU layer (no caption ghosting).
+      pol.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
     });
 
     function end() {
       if (pointerId == null) return;
       try { pol.releasePointerCapture(pointerId); } catch (e) {}
       pol.classList.remove("dragging");
+      if (moved) {
+        // Bake the transform offset into left/top, then reset transform.
+        pol.style.left = originX + dx + "px";
+        pol.style.top = originY + dy + "px";
+      }
       pol.style.transform = `rotate(${rot}deg)`;
       pointerId = null;
       if (!moved) openLightbox(photo);

@@ -267,14 +267,15 @@
 }
 .booth-hint {
   position: absolute;
-  top: 10px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-hand);
   font-size: 1.3rem;
   color: var(--ink-soft);
   pointer-events: none;
-  opacity: 0.8;
+  opacity: 0.75;
+  z-index: 0;
 }
 
 .polaroid {
@@ -336,7 +337,7 @@
   color: var(--apple-dark);
   margin-top: 1px;
 }
-.polaroid:hover {
+.polaroid:not(.dragging):hover {
   box-shadow: 6px 12px 24px rgba(74, 66, 59, 0.32);
   transform: scale(1.06) rotate(0deg) !important;
   z-index: 50 !important;
@@ -345,8 +346,8 @@
 .polaroid.dragging {
   cursor: grabbing;
   box-shadow: 10px 18px 30px rgba(74, 66, 59, 0.4);
-  transform: scale(1.04) rotate(0deg) !important;
-  z-index: 60 !important;
+  z-index: 999 !important;
+  transition: none;
 }
 .live-badge {
   position: absolute;
