@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  APPLE DIARY — EMBEDDABLE WIDGET PAGE
+  Use this URL in an iframe to embed the gallery on your site.
+
+  Examples:
+    <iframe src="https://your-domain.com/embed.html" width="100%" height="700"></iframe>
+    <iframe src="https://your-domain.com/embed.html?mode=gallery" width="100%" height="700"></iframe>
+    <iframe src="https://your-domain.com/embed.html?mode=calendar" width="100%" height="700"></iframe>
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple Diary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@400;600;700&family=Reenie+Beanie&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/gallery.css">
+  <style>
+    /* Compact header for embedded context */
+    .gallery-header { padding: 0.6rem 1rem; }
+    .brand-title { font-size: 1.7rem; }
+    .brand-icon svg { width: 32px; height: 40px; }
+    .mode-btn { padding: 0.45rem 0.9rem; font-size: 0.88rem; }
+    .view-section { min-height: calc(100vh - 64px); }
+    .gallery-controls { top: 64px; }
+  </style>
+</head>
+<body>
+  <div id="app" class="app">
+    <header class="gallery-header">
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 80 100" width="32" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40 10 C36 3 27 1 20 5" stroke="#4a7c3f" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+              <path d="M40 10 C44 3 53 2 58 7" stroke="#4a7c3f" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <ellipse cx="40" cy="57" rx="33" ry="37" fill="#e85d4a" stroke="#c94535" stroke-width="2.5"/>
+              <path d="M8 48 Q7 58 12 68 Q19 83 32 90 Q40 95 50 90 Q62 83 68 68 Q73 58 72 48" fill="#f07060" stroke="none" opacity="0.6"/>
+              <ellipse cx="26" cy="44" rx="9" ry="13" fill="#f5a090" opacity="0.4"/>
+            </svg>
+          </div>
+          <h1 class="brand-title">Apple Diary</h1>
+        </div>
+        <div class="mode-toggle" role="tablist" aria-label="View mode">
+          <button class="mode-btn active" id="btnCalendar" role="tab" aria-selected="true" data-mode="calendar">
+            <span class="mode-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </span>
+            Calendar
+          </button>
+          <button class="mode-btn" id="btnGallery" role="tab" aria-selected="false" data-mode="gallery">
+            <span class="mode-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="8" height="10" rx="1" transform="rotate(-5 6 12)"/>
+                <rect x="9" y="5" width="8" height="10" rx="1" transform="rotate(3 13 10)"/>
+                <rect x="16" y="8" width="8" height="10" rx="1" transform="rotate(-8 20 13)"/>
+              </svg>
+            </span>
+            Gallery
+          </button>
+        </div>
+        <div class="header-apples" aria-hidden="true">
+          <span class="deco-apple a1">🍎</span>
+          <span class="deco-apple a2">🍏</span>
+        </div>
+      </div>
+    </header>
+
+    <section id="calendarView" class="view-section calendar-section" role="tabpanel">
+      <div class="calendar-wrapper">
+        <div class="calendar-nav">
+          <button class="cal-nav-btn" id="prevMonth" aria-label="Previous month">‹</button>
+          <div class="cal-month-year">
+            <span id="calMonthName" class="cal-month-label"></span>
+            <span id="calYear" class="cal-year-label"></span>
+          </div>
+          <button class="cal-nav-btn" id="nextMonth" aria-label="Next month">›</button>
+        </div>
+        <div class="hanging-rope" aria-hidden="true">
+          <svg viewBox="0 0 1000 30" preserveAspectRatio="none" width="100%" height="30">
+            <path d="M0,5 Q50,25 100,5 Q150,25 200,5 Q250,25 300,5 Q350,25 400,5 Q450,25 500,5 Q550,25 600,5 Q650,25 700,5 Q750,25 800,5 Q850,25 900,5 Q950,25 1000,5"
+              stroke="#8b5e3c" stroke-width="2.5" fill="none" stroke-dasharray="4,2"/>
+          </svg>
+        </div>
+        <div class="calendar-grid-container">
+          <div class="cal-weekdays" role="row">
+            <div class="cal-weekday">Sun</div><div class="cal-weekday">Mon</div>
+            <div class="cal-weekday">Tue</div><div class="cal-weekday">Wed</div>
+            <div class="cal-weekday">Thu</div><div class="cal-weekday">Fri</div>
+            <div class="cal-weekday">Sat</div>
+          </div>
+          <div id="calendarGrid" class="calendar-grid" role="grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="galleryView" class="view-section gallery-section hidden" role="tabpanel">
+      <div class="gallery-controls">
+        <button class="gallery-shuffle-btn sketch-btn" id="shuffleBtn">🔀 Shuffle</button>
+        <div id="galleryPhotoCount" class="gallery-count"></div>
+      </div>
+      <div id="polaroidBoard" class="polaroid-board"></div>
+    </section>
+
+    <div id="loadingOverlay" class="loading-overlay hidden">
+      <div class="loading-apple">
+        <div class="apple-bounce">🍎</div>
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+      <div class="lightbox-media-container" id="lightboxMediaContainer"></div>
+      <div class="lightbox-info" id="lightboxInfo"></div>
+      <div class="lightbox-nav">
+        <button class="lightbox-nav-btn" id="lightboxPrev" aria-label="Previous">‹</button>
+        <button class="lightbox-nav-btn" id="lightboxNext" aria-label="Next">›</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/gallery.js"></script>
+</body>
+</html>

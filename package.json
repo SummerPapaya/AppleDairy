@@ -1,0 +1,32 @@
+{
+  "name": "apple-diary",
+  "version": "1.0.0",
+  "description": "Apple-themed live photo diary with calendar and polaroid gallery modes",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SummerPapaya/AppleDairy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SummerPapaya/AppleDairy/issues"
+  },
+  "homepage": "https://github.com/SummerPapaya/AppleDairy#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.10.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "helmet": "^8.2.0",
+    "multer": "^2.1.1",
+    "sharp": "^0.34.5",
+    "uuid": "^14.0.0"
+  }
+}
