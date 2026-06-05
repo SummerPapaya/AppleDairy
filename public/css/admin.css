@@ -189,7 +189,7 @@
   aspect-ratio: 1.1 / 1;
   margin: 0 auto;
   border: 2.5px solid var(--ink);
-  border-radius: 50% 50% 40% 40% / 72% 72% 26% 26%;
+  border-radius: 50% 50% 30% 30% / 76% 76% 16% 16%;
   overflow: hidden;
   background: #efe7da;
   cursor: grab;
