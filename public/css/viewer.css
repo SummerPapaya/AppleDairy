@@ -278,13 +278,12 @@
   z-index: 0;
 }
 
-/* Outer wrapper: handles drag position only, on its own GPU layer. */
+/* Outer wrapper: handles drag position (via left/top, no layer promotion). */
 .polaroid {
   position: absolute;
   width: 178px;
   cursor: grab;
   user-select: none;
-  will-change: transform;
 }
 /* Inner card: the visible polaroid (rotation, hover lift, shadow). */
 .polaroid-inner {
@@ -357,7 +356,8 @@
 }
 .polaroid.dragging .polaroid-inner {
   box-shadow: 10px 18px 30px rgba(74, 66, 59, 0.4);
-  transition: none;
+  transform: none !important; /* straighten while held; also avoids layer promotion */
+  transition: transform 0.12s ease;
 }
 .live-badge {
   position: absolute;

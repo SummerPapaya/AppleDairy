@@ -230,9 +230,6 @@
 
   function buildPolaroid(photo, rot) {
     const pol = el("div", "polaroid");
-    pol.dataset.dx = "0";
-    pol.dataset.dy = "0";
-
     const inner = el("div", "polaroid-inner");
     inner.style.transform = `rotate(${rot}deg)`;
 
@@ -252,7 +249,7 @@
   }
 
   function makeDraggable(pol, booth, photo) {
-    let startX, startY, baseDx, baseDy, dx, dy, moved, pointerId;
+    let startX, startY, originX, originY, moved, pointerId;
 
     pol.addEventListener("pointerdown", (e) => {
       if (e.button != null && e.button !== 0) return;
@@ -260,10 +257,8 @@
       pol.setPointerCapture(pointerId);
       startX = e.clientX;
       startY = e.clientY;
-      baseDx = parseFloat(pol.dataset.dx) || 0;
-      baseDy = parseFloat(pol.dataset.dy) || 0;
-      dx = baseDx;
-      dy = baseDy;
+      originX = pol.offsetLeft;
+      originY = pol.offsetTop;
       moved = false;
       pol.classList.add("dragging");
       e.preventDefault();
@@ -275,22 +270,18 @@
       const rawDy = e.clientY - startY;
       if (!moved && Math.hypot(rawDx, rawDy) > 5) moved = true;
       if (!moved) return;
-      // The card's CSS position (offsetLeft/Top) never changes; only this
-      // GPU transform offset does. Moving a permanently-promoted layer purely
-      // by transform avoids stale "ghost" paint left at the old position.
-      const left = pol.offsetLeft;
-      const top = pol.offsetTop;
-      dx = Math.max(-40 - left, Math.min(baseDx + rawDx, booth.clientWidth - 60 - left));
-      dy = Math.max(-10 - top, Math.min(baseDy + rawDy, booth.clientHeight - 60 - top));
-      pol.style.transform = `translate(${dx}px, ${dy}px)`;
+      // The wrapper has no transform and isn't a composited layer, so moving it
+      // via left/top fully repaints each frame — no stale ghost, no blank text.
+      const nx = Math.max(-40, Math.min(originX + rawDx, booth.clientWidth - 60));
+      const ny = Math.max(-10, Math.min(originY + rawDy, booth.clientHeight - 60));
+      pol.style.left = nx + "px";
+      pol.style.top = ny + "px";
     });
 
     function end() {
       if (pointerId == null) return;
       try { pol.releasePointerCapture(pointerId); } catch (e) {}
       pol.classList.remove("dragging");
-      pol.dataset.dx = String(dx);
-      pol.dataset.dy = String(dy);
       pointerId = null;
       if (!moved) openLightbox(photo);
     }
