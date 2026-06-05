@@ -275,7 +275,7 @@
       dx = Math.max(-40 - originX, Math.min(rawDx, booth.clientWidth - 60 - originX));
       dy = Math.max(-10 - originY, Math.min(rawDy, booth.clientHeight - 60 - originY));
       // Move the whole card on a single GPU layer (no caption ghosting).
-      pol.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
+      pol.style.transform = `translate3d(${dx}px, ${dy}px, 0) rotate(${rot}deg)`;
     });
 
     function end() {

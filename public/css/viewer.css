@@ -288,7 +288,7 @@
   cursor: grab;
   user-select: none;
   transition: box-shadow 0.16s ease, transform 0.16s ease, filter 0.16s ease;
-  will-change: transform;
+  backface-visibility: hidden;
 }
 .polaroid::after {
   /* little tape on top */
@@ -348,6 +348,7 @@
   box-shadow: 10px 18px 30px rgba(74, 66, 59, 0.4);
   z-index: 999 !important;
   transition: none;
+  will-change: transform;
 }
 .live-badge {
   position: absolute;
