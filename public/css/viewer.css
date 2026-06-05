@@ -134,11 +134,10 @@
 }
 .cal-cell {
   position: relative;
-  aspect-ratio: 1 / 1.05;
+  aspect-ratio: 1 / 1;
   border: 2px dashed var(--line);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.45);
-  padding-top: 4px;
   overflow: visible;
 }
 .cal-cell.empty-day {
@@ -160,15 +159,16 @@
   z-index: 2;
 }
 
-/* Apple thumbnail — centered in the date cell */
+/* Apple thumbnail — centered, fills most of the date cell */
 .hang {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 16px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
   transform-origin: center center;
   animation: sway 4.5s ease-in-out infinite;
@@ -177,22 +177,26 @@
 .cal-cell:nth-child(odd) .hang { animation-delay: -1.6s; animation-duration: 5.2s; }
 .cal-cell:nth-child(3n) .hang { animation-delay: -2.7s; animation-duration: 4.1s; }
 @keyframes sway {
-  0%, 100% { transform: translate(-50%, -50%) rotate(-3deg); }
-  50% { transform: translate(-50%, -50%) rotate(3deg); }
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
 }
 .hang .apple-frame {
   position: relative;
-  width: 68%;
-  max-width: 72px;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   aspect-ratio: 1 / 1;
   transition: transform 0.18s ease, filter 0.18s ease;
 }
 .hang .apple-frame .leaf {
   position: absolute;
-  top: -7px;
-  right: 18%;
-  width: 16px;
-  height: 12px;
+  top: -8%;
+  right: 16%;
+  width: 22%;
+  height: 16%;
+  min-width: 14px;
+  min-height: 10px;
   background: var(--leaf);
   border: 1.5px solid var(--leaf-dark);
   border-radius: 0 80% 0 80%;
@@ -218,7 +222,7 @@
 }
 .hang:hover { animation-play-state: paused; z-index: 6; }
 .hang:hover .apple-frame {
-  transform: scale(1.28);
+  transform: scale(1.12);
   filter: drop-shadow(3px 6px 6px var(--shadow));
 }
 .hang .live-dot {
@@ -464,6 +468,7 @@
   .brand h1 { font-size: 2rem; }
   .cal-grid { gap: 0.25rem; }
   .cal-daynum { font-size: 0.62rem; }
+  .hang { top: 13px; left: 2px; right: 2px; bottom: 2px; }
   .polaroid { width: 150px; }
   .viewer { padding: 1rem 0.7rem 3rem; }
 }
