@@ -4,3 +4,6 @@ uploads/*
 data/db.json
 *.log
 .DS_Store
+.env
+.env.*
+!.env.example

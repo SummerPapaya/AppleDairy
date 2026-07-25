@@ -29,6 +29,88 @@
   let aspectRatio = null;
   let thumbCrop = { ...ThumbCrop.DEFAULT };
   let cropDrag = null;
+  let authRequired = false;
+
+  const loginGate = $("login-gate");
+  const loginForm = $("login-form");
+  const loginStatus = $("login-status");
+  const adminMain = $("admin-main");
+  const logoutBtn = $("logout-btn");
+
+  const FETCH_OPTS = { credentials: "same-origin" };
+
+  async function authFetch(url, opts) {
+    const res = await fetch(url, Object.assign({}, FETCH_OPTS, opts || {}));
+    if (res.status === 401 && authRequired) {
+      showLogin("Session expired — please sign in again.");
+      throw new Error("Authentication required");
+    }
+    return res;
+  }
+
+  function showLogin(msg) {
+    loginGate.hidden = false;
+    adminMain.hidden = true;
+    if (msg) {
+      loginStatus.textContent = msg;
+      loginStatus.className = "status err";
+    }
+  }
+
+  function showAdmin() {
+    loginGate.hidden = true;
+    adminMain.hidden = false;
+    if (authRequired) logoutBtn.hidden = false;
+  }
+
+  async function checkAuth() {
+    try {
+      const res = await fetch("/api/auth/status", FETCH_OPTS);
+      const data = await res.json();
+      authRequired = !!data.authRequired;
+      if (!authRequired || data.authenticated) {
+        showAdmin();
+        return true;
+      }
+      showLogin();
+      return false;
+    } catch (e) {
+      showLogin("Couldn't reach the server.");
+      return false;
+    }
+  }
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    loginStatus.textContent = "Signing in…";
+    loginStatus.className = "status";
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+          username: $("login-user").value.trim(),
+          password: $("login-pass").value,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Sign in failed");
+      loginStatus.textContent = "";
+      $("login-pass").value = "";
+      showAdmin();
+      await loadEntries();
+    } catch (err) {
+      loginStatus.textContent = err.message;
+      loginStatus.className = "status err";
+    }
+  });
+
+  logoutBtn.addEventListener("click", async () => {
+    await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" });
+    resetForm();
+    showLogin();
+  });
 
   const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   function fmtLong(str) {
@@ -172,7 +254,7 @@
     try {
       const url = editingId ? `/api/photos/${editingId}` : "/api/photos";
       const method = editingId ? "PUT" : "POST";
-      const res = await fetch(url, { method, body: fd });
+      const res = await authFetch(url, { method, body: fd });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed");
       setStatus(editingId ? "Saved! ✓" : "Added to the basket! 🍎", "ok");
@@ -228,7 +310,7 @@
   async function del(photo) {
     if (!confirm(`Delete the apple from ${fmtLong(photo.date)}?`)) return;
     try {
-      const res = await fetch(`/api/photos/${photo.id}`, { method: "DELETE" });
+      const res = await authFetch(`/api/photos/${photo.id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Delete failed");
       if (editingId === photo.id) resetForm();
       await loadEntries();
@@ -275,5 +357,7 @@
     }
   }
 
-  loadEntries();
+  checkAuth().then((ok) => {
+    if (ok) loadEntries();
+  });
 })();

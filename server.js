@@ -167,6 +167,72 @@ async function removeUpload(url) {
 }
 
 // ---------------------------------------------------------------------------
+// Admin auth (session cookie). Set ADMIN_PASSWORD to enable.
+// ---------------------------------------------------------------------------
+const ADMIN_USER = process.env.ADMIN_USER || "admin";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
+const AUTH_ENABLED = ADMIN_PASSWORD.length > 0;
+const SESSION_COOKIE = "apple_session";
+const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+const sessions = new Map(); // token -> expiresAt (ms)
+
+function parseCookies(req) {
+  const header = req.headers.cookie;
+  if (!header) return {};
+  return Object.fromEntries(
+    header.split(";").map((part) => {
+      const i = part.indexOf("=");
+      if (i === -1) return [part.trim(), ""];
+      return [part.slice(0, i).trim(), decodeURIComponent(part.slice(i + 1).trim())];
+    })
+  );
+}
+
+function safeEqual(a, b) {
+  if (typeof a !== "string" || typeof b !== "string") return false;
+  const ba = Buffer.from(a);
+  const bb = Buffer.from(b);
+  if (ba.length !== bb.length) return false;
+  return crypto.timingSafeEqual(ba, bb);
+}
+
+function createSession() {
+  const token = crypto.randomBytes(32).toString("hex");
+  sessions.set(token, Date.now() + SESSION_TTL_MS);
+  return token;
+}
+
+function validateSession(token) {
+  if (!token) return false;
+  const exp = sessions.get(token);
+  if (!exp || Date.now() > exp) {
+    sessions.delete(token);
+    return false;
+  }
+  return true;
+}
+
+function sessionCookie(token) {
+  const secure = process.env.NODE_ENV === "production" ? "; Secure" : "";
+  return `${SESSION_COOKIE}=${token}; HttpOnly; Path=/; SameSite=Strict; Max-Age=${Math.floor(SESSION_TTL_MS / 1000)}${secure}`;
+}
+
+function clearSessionCookie() {
+  const secure = process.env.NODE_ENV === "production" ? "; Secure" : "";
+  return `${SESSION_COOKIE}=; HttpOnly; Path=/; SameSite=Strict; Max-Age=0${secure}`;
+}
+
+function getSessionToken(req) {
+  return parseCookies(req)[SESSION_COOKIE];
+}
+
+function requireAuth(req, res, next) {
+  if (!AUTH_ENABLED) return next();
+  if (validateSession(getSessionToken(req))) return next();
+  res.status(401).json({ error: "Authentication required" });
+}
+
+// ---------------------------------------------------------------------------
 // App
 // ---------------------------------------------------------------------------
 const app = express();
@@ -176,12 +242,42 @@ app.use(express.json());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") return res.sendStatus(204);
   next();
 });
 
 app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "7d" }));
+
+// ---- Auth ----
+app.get("/api/auth/status", (req, res) => {
+  if (!AUTH_ENABLED) {
+    return res.json({ authRequired: false, authenticated: true });
+  }
+  res.json({
+    authRequired: true,
+    authenticated: validateSession(getSessionToken(req)),
+  });
+});
+
+app.post("/api/auth/login", (req, res) => {
+  if (!AUTH_ENABLED) return res.json({ ok: true });
+  const username = (req.body?.username || "").trim();
+  const password = req.body?.password || "";
+  if (safeEqual(username, ADMIN_USER) && safeEqual(password, ADMIN_PASSWORD)) {
+    const token = createSession();
+    res.setHeader("Set-Cookie", sessionCookie(token));
+    return res.json({ ok: true });
+  }
+  res.status(401).json({ error: "Invalid username or password" });
+});
+
+app.post("/api/auth/logout", (req, res) => {
+  const token = getSessionToken(req);
+  if (token) sessions.delete(token);
+  res.setHeader("Set-Cookie", clearSessionCookie());
+  res.json({ ok: true });
+});
 
 // ---- API ----
 app.get("/api/photos", async (_req, res) => {
@@ -197,7 +293,7 @@ app.get("/api/photos/:id", async (req, res) => {
   res.json(photo);
 });
 
-app.post("/api/photos", uploadFields, async (req, res) => {
+app.post("/api/photos", requireAuth, uploadFields, async (req, res) => {
   try {
     const date = (req.body.date || "").trim();
     const description = (req.body.description || "").trim();
@@ -235,7 +331,7 @@ app.post("/api/photos", uploadFields, async (req, res) => {
   }
 });
 
-app.put("/api/photos/:id", uploadFields, async (req, res) => {
+app.put("/api/photos/:id", requireAuth, uploadFields, async (req, res) => {
   try {
     const id = req.params.id;
     const db = await readDB();
@@ -292,7 +388,7 @@ app.put("/api/photos/:id", uploadFields, async (req, res) => {
   }
 });
 
-app.delete("/api/photos/:id", async (req, res) => {
+app.delete("/api/photos/:id", requireAuth, async (req, res) => {
   const id = req.params.id;
   const db = await readDB();
   const existing = db.photos.find((p) => p.id === id);
@@ -321,4 +417,9 @@ app.listen(PORT, () => {
   console.log(`🍎 An Apple A Day running at http://localhost:${PORT}`);
   console.log(`   Viewer:  http://localhost:${PORT}/`);
   console.log(`   Admin:   http://localhost:${PORT}/admin`);
+  if (AUTH_ENABLED) {
+    console.log(`   Auth:    enabled (user: ${ADMIN_USER})`);
+  } else {
+    console.warn("   Auth:    DISABLED — set ADMIN_PASSWORD to protect admin writes");
+  }
 });

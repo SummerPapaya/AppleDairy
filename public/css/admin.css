@@ -11,6 +11,12 @@
   align-items: center;
   gap: 0.7rem;
   margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+.admin-head .logout-btn {
+  margin-left: auto;
+  font-size: 0.82rem;
+  padding: 0.4rem 0.85rem;
 }
 .admin-head img { width: 44px; height: 44px; }
 .admin-head h1 {
@@ -177,6 +183,34 @@
 .entry .e-actions .del { color: var(--apple-dark); border-left: 2px solid var(--line); }
 
 .empty-entries { color: var(--ink-soft); font-family: var(--font-hand); font-size: 1.4rem; }
+
+/* ---- Login gate ---- */
+.login-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+}
+.login-card {
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+}
+.login-card img { margin-bottom: 0.4rem; }
+.login-card h2 {
+  font-family: var(--font-hand);
+  font-size: 1.9rem;
+  margin: 0 0 0.3rem;
+  color: var(--apple-dark);
+}
+.login-hint {
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  margin: 0 0 1rem;
+}
+.login-card .field { text-align: left; }
+.login-card .btn { width: 100%; margin-top: 0.2rem; }
 
 /* ---- Calendar thumbnail crop editor ---- */
 .crop-editor {

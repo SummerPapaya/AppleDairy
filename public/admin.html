@@ -9,10 +9,30 @@
     <link rel="stylesheet" href="/css/admin.css" />
   </head>
   <body>
-    <main class="admin">
+    <!-- Login gate (shown when ADMIN_PASSWORD is set) -->
+    <div class="login-gate" id="login-gate" hidden>
+      <form class="login-card card" id="login-form">
+        <img src="/assets/apple.svg" alt="" width="44" height="44" />
+        <h2>An Apple A Day · Studio</h2>
+        <p class="login-hint">Sign in to upload and edit photos.</p>
+        <div class="field">
+          <label for="login-user">Username</label>
+          <input type="text" id="login-user" name="username" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="login-pass">Password</label>
+          <input type="password" id="login-pass" name="password" autocomplete="current-password" required />
+        </div>
+        <button type="submit" class="btn primary">Sign in</button>
+        <div class="status" id="login-status"></div>
+      </form>
+    </div>
+
+    <main class="admin" id="admin-main" hidden>
       <div class="admin-head">
         <img src="/assets/apple.svg" alt="apple" />
         <h1>An Apple A Day · Studio</h1>
+        <button type="button" class="btn logout-btn" id="logout-btn" hidden>Sign out</button>
       </div>
       <p class="admin-sub">
         Upload &amp; edit your Live Photos for each day, from phone or computer.
