@@ -91,10 +91,8 @@
     fetch("../README.md")
       .then((r) => r.text())
       .then((md) => {
-        document.getElementById("content").innerHTML = marked.parse(md);
-        document.querySelectorAll('img[src^="public/"]').forEach((img) => {
-          img.src = "../" + img.getAttribute("src");
-        });
+        const previewMd = md.replace(/src="public\//g, 'src="../public/');
+        document.getElementById("content").innerHTML = marked.parse(previewMd);
       })
       .catch((e) => {
         document.getElementById("content").innerHTML =

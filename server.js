@@ -402,6 +402,14 @@ app.delete("/api/photos/:id", requireAuth, async (req, res) => {
 });
 
 // ---- Static pages ----
+app.get("/readme-preview", (_req, res) =>
+  res.sendFile(path.join(PUBLIC_DIR, "readme-preview.html"))
+);
+app.get("/README.md", (_req, res) => {
+  res.type("text/plain; charset=utf-8");
+  res.sendFile(path.join(ROOT, "README.md"));
+});
+
 app.use(express.static(PUBLIC_DIR));
 
 app.get("/admin", (_req, res) => res.sendFile(path.join(PUBLIC_DIR, "admin.html")));
@@ -417,6 +425,7 @@ app.listen(PORT, () => {
   console.log(`🍎 An Apple A Day running at http://localhost:${PORT}`);
   console.log(`   Viewer:  http://localhost:${PORT}/`);
   console.log(`   Admin:   http://localhost:${PORT}/admin`);
+  console.log(`   README:  http://localhost:${PORT}/readme-preview`);
   if (AUTH_ENABLED) {
     console.log(`   Auth:    enabled (user: ${ADMIN_USER})`);
   } else {

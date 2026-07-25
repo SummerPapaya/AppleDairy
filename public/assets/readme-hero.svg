@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360" fill="none" aria-label="An Apple A Day - self-hosted apple Live Photo gallery">
+  <!-- static base: paper frame and ambient sketch lines -->
+  <rect x="0" y="0" width="1200" height="360" fill="#fffdf6"/>
+  <rect id="hero-frame" x="8" y="8" width="1184" height="344" rx="28" fill="#fffdf6" stroke="#d9cfc1" stroke-width="3"/>
+  <rect x="8" y="8" width="1184" height="344" rx="28" fill="none" stroke="#4a423b" stroke-width="1.4" opacity="0.12"/>
+  <g stroke="#d9cfc1" stroke-width="1.2" opacity="0.45">
+    <path d="M48 72H420M48 108H360M48 144H300"/>
+    <path d="M900 248H1152M940 272H1110M980 296H1070"/>
+  </g>
+  <g fill="#f6c453" opacity="0.35">
+    <circle cx="1080" cy="56" r="5"/>
+    <circle cx="1108" cy="78" r="3.5"/>
+    <circle cx="88" cy="280" r="4"/>
+    <circle cx="112" cy="304" r="2.8"/>
+  </g>
+  <path d="M72 318 Q180 308 290 318" stroke="#e8604c" stroke-width="2" stroke-linecap="round" opacity="0.18"/>
+  <path d="M910 62 Q980 52 1050 58" stroke="#87b067" stroke-width="1.8" stroke-linecap="round" opacity="0.22"/>
+
+  <!-- animated: title block -->
+  <g id="hero-title">
+    <text x="72" y="118" fill="#4a423b" font-family="Georgia, 'Times New Roman', serif" font-size="62" font-weight="700">An Apple A Day</text>
+    <text x="74" y="162" fill="#e8604c" font-family="Georgia, 'Times New Roman', serif" font-size="62" font-weight="700" opacity="0.14">An Apple A Day</text>
+    <circle cx="52" cy="98" r="16" fill="#e8604c" opacity="0.12"/>
+    <text x="52" y="106" text-anchor="middle" font-size="22">&#x1F34E;</text>
+  </g>
+
+  <!-- animated: subtitle and mode pills -->
+  <g id="hero-subtitle">
+    <text x="72" y="206" fill="#8c8178" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="500">Store apple-themed Live Photos of the day</text>
+    <text x="72" y="238" fill="#8c8178" font-family="Georgia, serif" font-size="18" font-style="italic">cute, hand-drawn, and a little bit magic</text>
+    <g font-family="system-ui, sans-serif" font-size="13" font-weight="700">
+      <rect x="72" y="258" width="108" height="30" rx="15" fill="#fffdfa" stroke="#d9cfc1" stroke-width="1.6"/>
+      <text x="126" y="278" text-anchor="middle" fill="#4a423b">Calendar</text>
+      <rect x="190" y="258" width="92" height="30" rx="15" fill="#fdf4e3" stroke="#4a423b" stroke-width="1.6"/>
+      <text x="236" y="278" text-anchor="middle" fill="#4a423b">Gallery</text>
+      <rect x="292" y="258" width="108" height="30" rx="15" fill="#fffdfa" stroke="#87b067" stroke-width="1.6"/>
+      <text x="346" y="278" text-anchor="middle" fill="#5f8a45">Live Photos</text>
+    </g>
+  </g>
+
+  <!-- animated: calendar proof -->
+  <g id="hero-calendar">
+    <rect x="640" y="52" width="188" height="196" rx="16" fill="#fffdfa" stroke="#d9cfc1" stroke-width="2.2" stroke-dasharray="6 4"/>
+    <text x="734" y="84" text-anchor="middle" fill="#4a423b" font-family="Georgia, serif" font-size="20" font-weight="600">June 2026</text>
+    <circle cx="676" cy="76" r="12" fill="#fffdfa" stroke="#4a423b" stroke-width="1.6"/>
+    <circle cx="792" cy="76" r="12" fill="#fffdfa" stroke="#4a423b" stroke-width="1.6"/>
+    <path d="M672 76h8M788 76h8" stroke="#4a423b" stroke-width="1.8" stroke-linecap="round"/>
+    <g fill="#8c8178" font-family="system-ui, sans-serif" font-size="11" font-weight="700">
+      <text x="664" y="108" text-anchor="middle">S</text>
+      <text x="694" y="108" text-anchor="middle">M</text>
+      <text x="724" y="108" text-anchor="middle">T</text>
+      <text x="754" y="108" text-anchor="middle">W</text>
+      <text x="784" y="108" text-anchor="middle">T</text>
+      <text x="814" y="108" text-anchor="middle">F</text>
+    </g>
+    <g stroke="#d9cfc1" stroke-width="1.5" fill="#fffdfa">
+      <rect x="650" y="118" width="34" height="34" rx="7" stroke-dasharray="4 3"/>
+      <rect x="688" y="118" width="34" height="34" rx="7" stroke-dasharray="4 3"/>
+      <rect x="726" y="118" width="34" height="34" rx="7" stroke-dasharray="4 3"/>
+      <rect x="764" y="118" width="34" height="34" rx="7" stroke-dasharray="4 3"/>
+      <rect x="650" y="156" width="34" height="34" rx="7" stroke-dasharray="4 3" fill="#fdf4e3"/>
+      <rect x="688" y="156" width="34" height="34" rx="7" stroke-dasharray="4 3"/>
+      <rect x="726" y="156" width="34" height="34" rx="7" stroke-dasharray="4 3"/>
+      <rect x="764" y="156" width="34" height="34" rx="7" stroke-dasharray="4 3"/>
+      <rect x="650" y="194" width="34" height="34" rx="7" stroke-dasharray="4 3"/>
+      <rect x="688" y="194" width="34" height="34" rx="7" stroke-dasharray="4 3"/>
+    </g>
+    <rect x="650" y="156" width="34" height="34" rx="7" stroke="#f6c453" stroke-width="2.2" fill="none"/>
+    <g>
+      <ellipse cx="667" cy="136" rx="11" ry="12" fill="#e8604c" stroke="#c8472f" stroke-width="1.2"/>
+      <ellipse cx="663" cy="133" rx="3" ry="2" fill="#fff" opacity="0.45"/>
+      <ellipse cx="743" cy="136" rx="11" ry="12" fill="#87b067" stroke="#5f8a45" stroke-width="1.2"/>
+      <ellipse cx="705" cy="174" rx="11" ry="12" fill="#f6c453" stroke="#c8972f" stroke-width="1.2"/>
+    </g>
+    <text x="734" y="232" text-anchor="middle" fill="#8c8178" font-family="Georgia, serif" font-size="12" font-style="italic">apple clips on dates</text>
+  </g>
+
+  <!-- animated: center apple logo -->
+  <g id="hero-apple">
+    <circle cx="862" cy="168" r="58" fill="#fffdfa" stroke="#d9cfc1" stroke-width="2" opacity="0.85"/>
+    <g transform="translate(826 124) scale(1.15)">
+      <path d="M38 13c6-7 14-7 16-5-1 6-7 11-13 11-2 0-4-3-3-6Z" fill="#87b067" stroke="#4a423b" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M40 14c4-2 9-2 12-2" stroke="#4a423b" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M33 16c0-5 1-8 3-10" stroke="#8a5a3c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M32 18c-5-4-12-4-16 1-5 6-4 18 2 27 3 5 7 9 11 9 2 0 3-1 3-1s1 1 3 1c4 0 8-4 11-9 6-9 7-21 2-27-4-5-11-5-16-1Z" fill="#e8604c" stroke="#4a423b" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M22 27c-2 3-2 7-1 10" stroke="#fff" stroke-width="2.6" stroke-linecap="round" opacity="0.7"/>
+    </g>
+  </g>
+
+  <!-- animated: polaroid gallery proof -->
+  <g id="hero-polaroid">
+    <rect x="930" y="48" width="244" height="228" rx="16" fill="#fdf4e3" stroke="#4a423b" stroke-width="2.2"/>
+    <g stroke="#8a5a3c" stroke-width="0.5" opacity="0.16">
+      <path d="M930 78H1174M930 108H1174M930 138H1174M930 168H1174M930 198H1174M930 228H1174"/>
+      <path d="M960 48V276M990 48V276M1020 48V276M1050 48V276M1080 48V276M1110 48V276M1140 48V276"/>
+    </g>
+    <g transform="translate(948 74) rotate(-10 52 56)">
+      <rect x="0" y="0" width="96" height="118" rx="4" fill="#fffdfa" stroke="#4a423b" stroke-width="2"/>
+      <rect x="28" y="-10" width="40" height="14" rx="2" fill="#f6c453" fill-opacity="0.75" stroke="#8a5a3c" stroke-width="0.8" stroke-dasharray="3 2"/>
+      <rect x="8" y="10" width="80" height="68" rx="2" fill="#efe7da" stroke="#d9cfc1" stroke-width="1"/>
+      <circle cx="36" cy="40" r="16" fill="#e8604c" opacity="0.9"/>
+      <path d="M28 34c3 3 6 3 9 0" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+      <rect x="12" y="14" width="28" height="12" rx="6" fill="#4a423b" fill-opacity="0.5"/>
+      <text x="26" y="23" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="7" font-weight="700">LIVE</text>
+      <path d="M12 96 Q34 92 56 96 T88 94" stroke="#4a423b" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.55"/>
+    </g>
+    <g transform="translate(1048 92) rotate(8 44 48)">
+      <rect x="0" y="0" width="88" height="108" rx="4" fill="#fffdfa" stroke="#4a423b" stroke-width="2"/>
+      <rect x="24" y="-8" width="36" height="12" rx="2" fill="#f6c453" fill-opacity="0.65" stroke="#8a5a3c" stroke-width="0.8"/>
+      <rect x="8" y="10" width="72" height="60" rx="2" fill="#efe7da" stroke="#d9cfc1" stroke-width="1"/>
+      <ellipse cx="44" cy="38" rx="14" ry="15" fill="#87b067" stroke="#5f8a45" stroke-width="1"/>
+      <path d="M14 88 Q36 84 58 88" stroke="#c8472f" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.45"/>
+    </g>
+    <text x="1052" y="252" text-anchor="middle" fill="#8c8178" font-family="Georgia, serif" font-size="12" font-style="italic">draggable polaroids</text>
+  </g>
+
+  <!-- animated: connecting sketch arrow -->
+  <g id="hero-arrow">
+    <path d="M828 168 C848 168 858 148 878 148" stroke="#4a423b" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.35" stroke-dasharray="5 4"/>
+    <path d="M872 148l8-5v10z" fill="#4a423b" opacity="0.35"/>
+  </g>
+</svg>
