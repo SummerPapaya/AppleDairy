@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>README Preview · An Apple A Day</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.6.1/github-markdown-light.min.css" />
+  <style>
+    :root {
+      --apple: #e8604c;
+      --paper: #fffdf6;
+      --ink: #4a423b;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #fdf4e3 0%, var(--paper) 120px, #f8f4ec 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    .preview-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.65rem 1.2rem;
+      background: rgba(255, 253, 246, 0.92);
+      border-bottom: 2px solid #d9cfc1;
+      backdrop-filter: blur(8px);
+      font-size: 0.88rem;
+      color: var(--ink);
+    }
+    .preview-bar strong { color: var(--apple); }
+    .preview-bar a {
+      color: var(--apple);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .preview-bar a:hover { text-decoration: underline; }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 4rem;
+    }
+    .markdown-body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2rem 2.2rem;
+      background: #fff;
+      border: 2px solid #d9cfc1;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(74, 66, 59, 0.1);
+    }
+    .markdown-body img[alt="An Apple A Day logo"],
+    .markdown-body img[alt*="Calendar mode"],
+    .markdown-body img[alt*="Gallery mode"],
+    .markdown-body img[alt*="calendar and polaroid"] {
+      filter: drop-shadow(0 4px 8px rgba(232, 96, 76, 0.18));
+      max-width: 100%;
+      height: auto;
+    }
+    .markdown-body table td[style*="dashed"] {
+      background: #fffdfa !important;
+    }
+    .markdown-body table td[style*="box-shadow"] {
+      background: #fdf4e3 !important;
+    }
+    .markdown-body h1 { border-bottom-color: #f6c453; }
+    .markdown-body a { color: var(--apple); }
+    .markdown-body blockquote {
+      border-left-color: var(--apple);
+      background: #fff8f4;
+    }
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: #8c8178;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-bar">
+    <span><strong>README preview</strong></span>
+    <span>
+      <a href="/README.md" download>Download README.md</a>
+      ·
+      <a href="/">Open app</a>
+    </span>
+  </div>
+  <div class="wrap">
+    <article id="content" class="markdown-body">
+      <p class="loading">Rendering README…</p>
+    </article>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    marked.setOptions({ gfm: true, breaks: false });
+    fetch("/README.md")
+      .then((r) => r.text())
+      .then((md) => {
+        // GitHub uses repo-root paths; rewrite for local static serving.
+        const previewMd = md.replace(/src="public\//g, 'src="/');
+        document.getElementById("content").innerHTML = marked.parse(previewMd);
+      })
+      .catch((e) => {
+        document.getElementById("content").innerHTML =
+          "<p>Could not load README.md: " + e.message + "</p>";
+      });
+  </script>
+</body>
+</html>

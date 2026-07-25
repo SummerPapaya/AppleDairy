@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160" fill="none" aria-hidden="true">
+  <rect width="240" height="160" rx="14" fill="#fffdfa"/>
+  <!-- month header -->
+  <text x="120" y="22" text-anchor="middle" fill="#4a423b" font-family="Georgia, serif" font-size="14" font-weight="600">June 2026</text>
+  <circle cx="72" cy="18" r="10" fill="#fffdfa" stroke="#4a423b" stroke-width="1.6"/>
+  <circle cx="168" cy="18" r="10" fill="#fffdfa" stroke="#4a423b" stroke-width="1.6"/>
+  <path d="M69 18h6M165 18h6" stroke="#4a423b" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- dow -->
+  <g fill="#8c8178" font-family="system-ui,sans-serif" font-size="7" font-weight="700">
+    <text x="28" y="38" text-anchor="middle">S</text>
+    <text x="58" y="38" text-anchor="middle">M</text>
+    <text x="88" y="38" text-anchor="middle">T</text>
+    <text x="118" y="38" text-anchor="middle">W</text>
+    <text x="148" y="38" text-anchor="middle">T</text>
+    <text x="178" y="38" text-anchor="middle">F</text>
+    <text x="208" y="38" text-anchor="middle">S</text>
+  </g>
+  <!-- row 1 cells -->
+  <g stroke="#d9cfc1" stroke-width="1.5" fill="#fffdfa">
+    <rect x="12" y="44" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+    <rect x="44" y="44" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+    <rect x="76" y="44" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+    <rect x="108" y="44" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+    <rect x="140" y="44" width="30" height="30" rx="8" stroke="#f6c453" fill="#fdf4e3"/>
+    <rect x="172" y="44" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+    <rect x="204" y="44" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+  </g>
+  <!-- row 2 -->
+  <g stroke="#d9cfc1" stroke-width="1.5" fill="#fffdfa">
+    <rect x="12" y="78" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+    <rect x="44" y="78" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+    <rect x="76" y="78" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+    <rect x="108" y="78" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+    <rect x="140" y="78" width="30" height="30" rx="8" stroke-dasharray="4 3"/>
+  </g>
+  <!-- day nums -->
+  <g fill="#8c8178" font-family="system-ui,sans-serif" font-size="6" font-weight="700">
+    <text x="16" y="54">1</text>
+    <text x="48" y="54">2</text>
+    <text x="80" y="54">3</text>
+    <text x="112" y="54">4</text>
+    <text x="144" y="54">5</text>
+  </g>
+  <!-- apple clips -->
+  <ellipse cx="27" cy="66" rx="9" ry="9.5" fill="#e8604c" stroke="#c8472f" stroke-width="1.4"/>
+  <ellipse cx="24" cy="63" rx="2.5" ry="1.4" fill="#fff" opacity="0.5"/>
+  <ellipse cx="59" cy="66" rx="9" ry="9.5" fill="#87b067" stroke="#5f8a45" stroke-width="1.4"/>
+  <ellipse cx="155" cy="66" rx="9" ry="9.5" fill="#f6c453" stroke="#c8972f" stroke-width="1.4"/>
+  <ellipse cx="123" cy="66" rx="9" ry="9.5" fill="#e8604c" stroke="#c8472f" stroke-width="1.4" opacity="0.85"/>
+  <!-- live dot -->
+  <circle cx="33" cy="72" r="3" fill="#fff" stroke="#c8472f" stroke-width="1"/>
+  <circle cx="33" cy="72" r="1.2" fill="#e8604c"/>
+  <!-- hover hint -->
+  <text x="120" y="138" text-anchor="middle" fill="#8c8178" font-family="Georgia, serif" font-size="9" font-style="italic">hover · click to zoom</text>
+</svg>
