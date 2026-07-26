@@ -13,6 +13,7 @@
     }
     body {
       margin: 0;
+      padding-bottom: 3.25rem;
       background: linear-gradient(180deg, #fdf4e3 0%, var(--paper) 120px, #f8f4ec 100%);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     }
@@ -70,15 +71,20 @@
       font-style: italic;
     }
     .preview-footer {
-      max-width: 920px;
-      margin: 1.25rem auto 0;
-      padding: 0.85rem 1.1rem;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      margin: 0;
+      padding: 0.7rem 1.2rem;
       text-align: center;
       font-size: 0.82rem;
       color: #8c8178;
-      background: rgba(255, 253, 246, 0.75);
-      border: 1.5px dashed #d9cfc1;
-      border-radius: 12px;
+      background: rgba(255, 253, 246, 0.96);
+      border-top: 1.5px dashed #d9cfc1;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 -2px 12px rgba(74, 66, 59, 0.08);
     }
     .preview-footer a {
       color: var(--apple);
@@ -101,12 +107,12 @@
     <article id="content" class="markdown-body">
       <p class="loading">Rendering README…</p>
     </article>
-    <p class="preview-footer">
-      README visuals redesigned with
-      <a href="https://github.com/oil-oil/beautify-github-readme" target="_blank" rel="noopener">beautify-github-readme</a>
-      — animated hero, SVG illustrations, and layout guidance.
-    </p>
   </div>
+  <footer id="preview-footer" class="preview-footer">
+    README visuals redesigned with
+    <a href="https://github.com/oil-oil/beautify-github-readme" target="_blank" rel="noopener">beautify-github-readme</a>
+    — animated hero, SVG illustrations, and layout guidance.
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     marked.setOptions({ gfm: true, breaks: false });

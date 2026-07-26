@@ -402,9 +402,10 @@ app.delete("/api/photos/:id", requireAuth, async (req, res) => {
 });
 
 // ---- Static pages ----
-app.get("/readme-preview", (_req, res) =>
-  res.sendFile(path.join(PUBLIC_DIR, "readme-preview.html"))
-);
+app.get("/readme-preview", (_req, res) => {
+  res.set("Cache-Control", "no-store");
+  res.sendFile(path.join(PUBLIC_DIR, "readme-preview.html"));
+});
 app.get("/README.md", (_req, res) => {
   res.type("text/plain; charset=utf-8");
   res.sendFile(path.join(ROOT, "README.md"));
