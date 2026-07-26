@@ -1,0 +1,41 @@
+{
+  "width": 1200,
+  "fps": 30,
+  "duration": 5.0,
+  "colors": 256,
+  "dither": "none",
+  "clip_to_base_alpha": false,
+  "max_size_mb": 2.0,
+  "layers": [
+    {
+      "id": "hero-title",
+      "enter": { "start": 0.15, "end": 0.95, "from": [-48, 0] },
+      "exit": { "start": 4.15, "end": 4.92, "to": [-24, 0] }
+    },
+    {
+      "id": "hero-subtitle",
+      "enter": { "start": 0.35, "end": 1.05, "from": [-36, 8] },
+      "exit": { "start": 4.15, "end": 4.92, "to": [-18, 4] }
+    },
+    {
+      "id": "hero-calendar",
+      "enter": { "start": 0.55, "end": 1.25, "from": [-72, 16] },
+      "exit": { "start": 4.15, "end": 4.92, "to": [-36, 8] }
+    },
+    {
+      "id": "hero-apple",
+      "enter": { "start": 0.75, "end": 1.45, "from": [0, -28] },
+      "exit": { "start": 4.15, "end": 4.92, "to": [0, -14] }
+    },
+    {
+      "id": "hero-arrow",
+      "enter": { "start": 0.95, "end": 1.55, "from": [-16, 0] },
+      "exit": { "start": 4.15, "end": 4.92, "to": [-8, 0] }
+    },
+    {
+      "id": "hero-polaroid",
+      "enter": { "start": 1.05, "end": 1.75, "from": [84, 18] },
+      "exit": { "start": 4.15, "end": 4.92, "to": [42, 9] }
+    }
+  ]
+}

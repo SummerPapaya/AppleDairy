@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160" fill="none" aria-hidden="true">
+  <rect width="240" height="160" rx="14" fill="#fdf4e3" stroke="#4a423b" stroke-width="1.8"/>
+  <!-- corkboard grid -->
+  <g stroke="#8a5a3c" stroke-width="0.4" opacity="0.15">
+    <path d="M0 20H240M0 40H240M0 60H240M0 80H240M0 100H240M0 120H240M0 140H240"/>
+    <path d="M20 0V160M40 0V160M60 0V160M80 0V160M100 0V160M120 0V160M140 0V160M160 0V160M180 0V160M200 0V160M220 0V160"/>
+  </g>
+  <!-- polaroid 1 -->
+  <g transform="translate(28, 24) rotate(-11)">
+    <rect x="0" y="0" width="72" height="88" rx="3" fill="#fffdfa" stroke="#4a423b" stroke-width="1.6"/>
+    <rect x="22" y="-8" width="28" height="11" rx="2" fill="#f6c453" fill-opacity="0.7" stroke="#8a5a3c" stroke-width="0.7" stroke-dasharray="2 1.5" transform="rotate(-5 36 -2)"/>
+    <rect x="6" y="6" width="60" height="52" rx="2" fill="#efe7da"/>
+    <circle cx="30" cy="30" r="14" fill="#e8604c"/>
+    <path d="M22 26c3 3 6 3 9 0" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
+    <path d="M10 72 Q24 69 38 72 T58 70" stroke="#4a423b" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+    <path d="M14 80 Q28 78 42 80" stroke="#c8472f" stroke-width="0.85" stroke-linecap="round" fill="none" opacity="0.45"/>
+  </g>
+  <!-- polaroid 2 -->
+  <g transform="translate(118, 18) rotate(7)">
+    <rect x="0" y="0" width="68" height="84" rx="3" fill="#fffdfa" stroke="#4a423b" stroke-width="1.6"/>
+    <rect x="20" y="-7" width="26" height="10" rx="2" fill="#f6c453" fill-opacity="0.65" stroke="#8a5a3c" stroke-width="0.7" transform="rotate(3 33 -2)"/>
+    <rect x="6" y="6" width="56" height="48" rx="2" fill="#efe7da"/>
+    <rect x="6" y="6" width="56" height="48" rx="2" fill="#87b067" opacity="0.35"/>
+    <rect x="10" y="8" width="22" height="8" rx="4" fill="#4a423b" fill-opacity="0.4"/>
+    <text x="14" y="14" fill="#fff" font-family="system-ui,sans-serif" font-size="5" font-weight="700">LIVE</text>
+    <path d="M10 66 Q22 63 34 66 T50 64" stroke="#4a423b" stroke-width="0.95" stroke-linecap="round" fill="none" opacity="0.5"/>
+    <path d="M12 74 Q24 72 36 74" stroke="#c8472f" stroke-width="0.8" stroke-linecap="round" fill="none" opacity="0.4"/>
+  </g>
+  <!-- polaroid 3 small -->
+  <g transform="translate(168, 78) rotate(-6)">
+    <rect x="0" y="0" width="56" height="68" rx="2.5" fill="#fffdfa" stroke="#4a423b" stroke-width="1.4"/>
+    <rect x="5" y="5" width="46" height="38" rx="2" fill="#efe7da"/>
+    <circle cx="24" cy="22" r="10" fill="#f6c453"/>
+    <path d="M8 54 Q20 52 32 54" stroke="#4a423b" stroke-width="0.85" stroke-linecap="round" fill="none" opacity="0.45"/>
+  </g>
+  <text x="120" y="148" text-anchor="middle" fill="#8c8178" font-family="Georgia, serif" font-size="9" font-style="italic">drag · click to zoom</text>
+</svg>
