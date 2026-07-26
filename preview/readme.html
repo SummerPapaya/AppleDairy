@@ -69,6 +69,23 @@
       color: #8c8178;
       font-style: italic;
     }
+    .preview-footer {
+      max-width: 920px;
+      margin: 1.25rem auto 0;
+      padding: 0.85rem 1.1rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: #8c8178;
+      background: rgba(255, 253, 246, 0.75);
+      border: 1.5px dashed #d9cfc1;
+      border-radius: 12px;
+    }
+    .preview-footer a {
+      color: var(--apple);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .preview-footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -84,6 +101,11 @@
     <article id="content" class="markdown-body">
       <p class="loading">Rendering README…</p>
     </article>
+    <p class="preview-footer">
+      README visuals redesigned with
+      <a href="https://github.com/oil-oil/beautify-github-readme" target="_blank" rel="noopener">beautify-github-readme</a>
+      — animated hero, SVG illustrations, and layout guidance.
+    </p>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
