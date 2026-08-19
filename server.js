@@ -407,6 +407,7 @@ app.get("/readme-preview", (_req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, "readme-preview.html"));
 });
 app.get("/README.md", (_req, res) => {
+  res.set("Cache-Control", "no-store");
   res.type("text/plain; charset=utf-8");
   res.sendFile(path.join(ROOT, "README.md"));
 });
